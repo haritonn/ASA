@@ -23,6 +23,7 @@ class AVL
         delete t;
     }
 
+    //Вставка
     node* insert(int x, node* t)
     {
         if(t == NULL)
@@ -59,6 +60,7 @@ class AVL
         return t;
     }
 
+    //LL
     node* singleRightRotate(node* &t)
     {
         node* u = t->left;
@@ -68,7 +70,8 @@ class AVL
         u->height = max(height(u->left), t->height)+1;
         return u;
     }
-
+    
+    //RR
     node* singleLeftRotate(node* &t)
     {
         node* u = t->right;
@@ -79,12 +82,14 @@ class AVL
         return u;
     }
 
+    //LR
     node* doubleLeftRotate(node* &t)
     {
         t->right = singleRightRotate(t->right);
         return singleLeftRotate(t);
     }
 
+    //RL
     node* doubleRightRotate(node* &t)
     {
         t->left = singleLeftRotate(t->left);
@@ -111,6 +116,7 @@ class AVL
             return findMax(t->right);
     }
 
+    //Удалить узел
     node* remove(int x, node* t)
     {
         node* temp;
@@ -161,11 +167,13 @@ class AVL
         return t;
     }
 
+    // Поиск высоты
     int height(node* t)
     {
         return (t == NULL ? -1 : t->height);
     }
 
+    // Узнать баланс в текущем узле
     int getBalance(node* t)
     {
         if(t == NULL)
@@ -174,6 +182,7 @@ class AVL
             return height(t->left) - height(t->right);
     }
 
+    // Симметричный обход
     void inorder(node* t)
     {
         if(t == NULL)
@@ -208,7 +217,6 @@ public:
 
 int main()
 {   
-    //insert, display, remove
     AVL t;
     int n;
     cout << "N = "; cin >> n;
