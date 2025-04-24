@@ -4,69 +4,69 @@
 
 using namespace std;
 
-// Функция для вычисления префиксной функции
+//префикс-функция
 vector<int> prefix_function(string s)
 {
     int n = (int)s.size();
-    vector<int> p(n, 0); // Инициализация вектора префиксов
+    vector<int> p(n, 0); 
 
     for (int i = 1; i < n; i++)
     {
-        int j = p[i - 1]; // Текущий индекс префикса
+        int j = p[i - 1]; 
 
-        while (s[i] != s[j] && j > 0) // Поиск корректного префикса
+        while (s[i] != s[j] && j > 0) 
             j = p[j - 1];
 
-        if (s[i] == s[j]) // Совпадение символов
-            p[i] = j + 1; // Увеличиваем длину префикса
+        if (s[i] == s[j]) //если символы совпали, то увеличиваем длину рассматриваемого префикса 
+            p[i] = j + 1; 
     }
 
-    return p; // Возвращаем вектор префиксов
+    return p; 
 }
 
-// Функция для вычисления Z-функции
+//z-функция 
 vector<int> z_function(string s)
 {
     int n = (int)s.size();
-    vector<int> z(n, 0); // Инициализация Z-вектора
-    int l = 0, r = 0;    // Границы текущего сегмента
+    vector<int> z(n, 0); 
+    int l = 0, r = 0;    
 
     for (int i = 1; i < n; i++)
     {
-        if (i <= r)                          // Проверяем, находимся ли мы внутри Z-границ
-            z[i] = min(r - i + 1, z[i - l]); // Используем ранее вычисленные значения
-
-        while (i + z[i] < n && s[z[i]] == s[i + z[i]]) // Поиск совпадений
-            z[i]++;                                    // Увеличиваем Z-значение
+        if (i <= r)                          
+            z[i] = min(r - i + 1, z[i - l]); 
+        while (i + z[i] < n && s[z[i]] == s[i + z[i]]) 
+            z[i]++;                                    
 
         if (i + z[i] - 1 > r)
-        { // Обновляем границы
+        { 
             r = i + z[i] - 1;
             l = i;
         }
     }
-    z[0] = n; // Начальное значение Z-функции
-    return z; // Возвращаем Z-вектор
+    z[0] = n;
+
+    return z; 
 }
 
 int main()
 {
     string s;
-    cout << "Введите строку: "; // Запрос пользователю
-    getline(cin, s);            // Считываем строку с терминала
+    cout << "Введите строку: "; 
+    getline(cin, s);           
 
     vector<int> prefix = prefix_function(s);
     vector<int> z = z_function(s);
 
-    cout << "Префиксная функция: ";
+    cout << "Префикс-функция: ";
     for (int val : prefix)
         cout << val << " ";
-    cout << endl;
+    cout << "\n";
 
-    cout << "Z функция: ";
+    cout << "Z-функция: ";
     for (int val : z)
         cout << val << " ";
-    cout << endl;
+    cout << "\n";
 
     return 0;
 }

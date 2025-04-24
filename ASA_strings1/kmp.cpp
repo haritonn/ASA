@@ -4,56 +4,56 @@
 
 using namespace std;
 
-// Функция для вычисления префиксной функции
+//префикс-функция
 vector<int> prefix_function(const string &s)
 {
     int n = s.size();
-    vector<int> p(n, 0); // Инициализация вектора префиксов
+    vector<int> p(n, 0); 
 
     for (int i = 1; i < n; i++)
     {
-        int j = p[i - 1]; // Текущий индекс префикса
+        int j = p[i - 1]; 
 
-        while (j > 0 && s[i] != s[j]) // Поиск корректного префикса
+        while (j > 0 && s[i] != s[j]) 
             j = p[j - 1];
 
-        if (s[i] == s[j]) // Совпадение символов
-            p[i] = j + 1; // Увеличиваем длину префикса
+        if (s[i] == s[j]) 
+            p[i] = j + 1; 
     }
 
-    return p; // Возвращаем вектор префиксов
+    return p; 
 }
 
-// Функция для поиска подстроки с использованием алгоритма КМП
+//КМП
 vector<int> kmp_search(const string &text, const string &pattern)
 {
-    string concatenated = pattern + "#" + text;    // Сцепляем шаблон и текст
-    vector<int> p = prefix_function(concatenated); // Вычисляем префиксную функцию
-    vector<int> matches;                           // Вектор для хранения индексов совпадений
+    string concatenated = pattern + "@" + text;    
+    vector<int> p = prefix_function(concatenated); 
+    vector<int> matches;                           
 
     for (int i = pattern.size() + 1; i < p.size(); i++)
-    { // Начинаем после шаблона и разделителя
+    { 
         if (p[i] == pattern.size())
-        {                                              // Нахождение полного совпадения
-            matches.push_back(i - 2 * pattern.size()); // Индекс совпадения
+        {                                              
+            matches.push_back(i - 2 * pattern.size()); 
         }
     }
 
-    return matches; // Возвращаем вектор совпадений
+    return matches; 
 }
 
 int main()
 {
     string text, pattern;
 
-    cout << "Введите текст: ";  // Запрос пользователю
-    getline(cin, text);         // Считываем текст с терминала
-    cout << "Введите шаблон: "; // Запрос шаблона
-    getline(cin, pattern);      // Считываем шаблон
+    cout << "Введите исходную строку: ";  
+    getline(cin, text);         
+    cout << "Введите искомую подстроку: "; 
+    getline(cin, pattern);      
 
     vector<int> matches = kmp_search(text, pattern);
 
-    cout << "Совпадения найдены на следующих индексах: ";
+    cout << "Результат (индекс, с которого начинается подстрока): ";
     for (int idx : matches)
     {
         cout << idx << " ";
