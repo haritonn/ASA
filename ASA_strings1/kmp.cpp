@@ -52,13 +52,18 @@ int main()
     getline(cin, pattern);      
 
     vector<int> matches = kmp_search(text, pattern);
-
-    cout << "Результат (индекс, с которого начинается подстрока): ";
-    for (int idx : matches)
+    
+    if (matches.size() == 0)
+        cout << "Не удалось найти совпадения";
+    else 
     {
-        cout << idx << " ";
+        cout << "Результат (индекс(-ы), с которого начинается подстрока): ";
+        for (int idx : matches)
+        {
+            cout << idx << " ";
+        }
+        cout << endl;
     }
-    cout << endl;
 
     return 0;
 }
